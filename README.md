@@ -1,3 +1,34 @@
+# Project Overview
+  This project is fullstack web aplication built with Express, React and MySQL to practice web security vulnerabilities and penetration testing
+
+# Implemented Vulnerabilities(very simple)
+  ##1.Cross-Site Scripting (XSS)
+    Endpoint:```/dodaj_post```
+    User input is not sanitized before being rendered in the frontend.
+    This allows injection of malicious JavaScript code
+
+  ##2.Insecure Direct Object Reference (IDOR)
+    Endpoint:```/moje_konto/:id```
+    The backend does not verify whether the authenticated user is authorized to access the requested resource.
+    By modifying the id parameter, it is possible to access other users data.
+
+  ##3.Brute-Force Attack (Broken Authentication)
+    Endpoint:```/logowanie```
+    The login endpoint does not implement:
+      - rate limiting
+      - account lockout
+      - request throttling
+    This allows automated credential guessing using predefined username/email/passwords combination.
+
+  ###All attacks are simulated with a Python scripts using the requests library
+
+  # What I learned
+  - How missing input validation leads to XSS
+  - How lack of authorization checks causes IDOR
+  - Why authentication endpoints require rate limiting
+  - How to automate HTTP attacks using Python
+  - How backend logic flaws create real security risks
+
 # How to run
 ## 1. Database Setup (MYSQL XAMPP)
   - Make sure you have XAMPP installed and running MySQL
