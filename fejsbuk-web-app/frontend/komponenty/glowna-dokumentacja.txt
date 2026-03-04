@@ -1,0 +1,92 @@
+DOKUMENTACJA KOMPONENTU Glowna
+Opis
+
+Komponent Glowna odpowiada za główną stronę użytkownika, gdzie można:
+
+dodawać nowe posty,
+
+przeglądać wszystkie posty lub tylko swoje,
+
+edytować własne posty w locie.
+
+Props
+Nazwa	Typ	Opis
+dodaj_posty	Function	Funkcja do dodawania nowego posta (wywołuje backend)
+posty	Array	Tablica obiektów postów do wyświetlenia
+id	Number	ID zalogowanego użytkownika
+login	String	Nazwa zalogowanego użytkownika
+edytuj_posty	Function	Funkcja do edycji posta (wywołuje backend)
+Stan komponentu (useState)
+Nazwa	Typ	Opis
+tresc	String	Aktualna treść pola do dodania posta
+filtr	String	Wartość filtra postów ("wszystkie" lub "moje")
+edytowanyPost	Number / null	ID posta w trybie edycji, null oznacza brak edycji
+nowaTresc	String	Tymczasowa treść posta w edycji
+Funkcje wewnętrzne
+DodajHandle(e)
+
+Zapobiega domyślnej akcji formularza (e.preventDefault()).
+
+Wywołuje funkcję dodaj_posty z treścią posta i ID użytkownika.
+
+Resetuje tresc po dodaniu.
+
+filtr_postow(post)
+
+Funkcja filtrująca posty do wyświetlenia:
+
+Jeśli filtr to "moje" - wyświetla tylko posty użytkownika (login).
+
+Jeśli filtr to "wszystkie" - wyświetla wszystkie posty.
+
+zapiszEdycje(id_posta)
+
+Wywołuje funkcję edytuj_posty z nową treścią posta.
+
+Resetuje tryb edycji (edytowanyPost) i nowaTresc.
+
+Tryby renderowania
+
+Dodawanie postu
+
+textarea z treścią nowego posta.
+
+Przycisk Dodaj post.
+
+Filtr postów
+
+Przycisk Wszystkie - pokazuje wszystkie posty.
+
+Przycisk Moje posty - pokazuje tylko posty zalogowanego użytkownika.
+
+Wyświetlanie postów
+
+Każdy post w osobnej karcie (card) z nazwą autora.
+
+Jeśli post należy do zalogowanego użytkownika - pojawia się ikona edycji (FaEdit).
+
+Po kliknięciu ikony edycji:
+
+Pole textarea z możliwością edycji.
+
+Przycisk Zapisz - zapisuje zmiany.
+
+Przycisk Anuluj - anulowanie edycji.
+
+Stylizacja
+
+Bootstrap:
+
+card, btn, btn-primary, btn-success, btn-danger, form-control, d-flex, gap-2
+
+Maksymalna szerokość kontenera: 600px
+
+Karty postów mają cień (shadow-sm) i marginesy.
+
+Uwagi
+
+Komponent jest stateful, zarządza edycją i filtrowaniem postów lokalnie.
+
+Funkcje dodaj_posty i edytuj_posty muszą być dostarczone z komponentu nadrzędnego (App.js) i obsługiwać backend.
+
+Filtr "moje" wymaga zgodności loginu użytkownika z polem nazwa_uzytkownika w poście.

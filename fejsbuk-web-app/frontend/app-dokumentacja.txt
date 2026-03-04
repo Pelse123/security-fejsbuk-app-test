@@ -1,0 +1,156 @@
+DOKUMENTACJA FRONTEND – PORTAL SPOŁECZNOŚCIOWY (React)
+Technologie
+
+React + React Router
+
+Bootstrap 5
+
+React Icons
+
+Fetch API do komunikacji z backendem (http://localhost:8000)
+
+Komponenty:
+
+Logowanie
+
+Glowna
+
+MojProfil
+
+Admin
+
+Stan aplikacji (useState)
+Zmienna	Typ	Opis
+moje_konto	Object	Dane zalogowanego użytkownika
+id	Number	ID aktualnego użytkownika
+posty	Array	Lista wszystkich postów
+stanZalogowania	Boolean / null	Status zalogowania (true = zalogowany, null = niezalogowany)
+uzytkownik	String	Rola użytkownika (user lub admin)
+login	String	Nazwa użytkownika
+uzytkownicy	Array	Lista wszystkich użytkowników (dla admina)
+Funkcje komunikacji z backendem
+1. wyswietl_konto()
+
+Pobiera dane aktualnego użytkownika z backendu /moje_konto/:id.
+
+Aktualizuje stan moje_konto.
+
+2. logowanie(email, nazwa_uzytkownika, hasla)
+
+POST /logowanie
+
+Body: { email, nazwa_uzytkownika, hasla }
+
+Jeśli dane poprawne:
+
+ustawia stanZalogowania na true
+
+zapisuje uzytkownik, id, login i moje_konto
+
+Jeśli błędne, pokazuje alert.
+
+3. rejestracja(email, nazwa_uzytkownika, hasla)
+
+POST /rejestracja
+
+Body: { nazwa_uzytkownika, email, hasla }
+
+Pokazuje alert z wynikiem rejestracji.
+
+4. dodaj_posty(tresc, uzytkownik_id)
+
+POST /dodaj_post
+
+Body: { tresc, uzytkownik_id }
+
+Po sukcesie odświeża listę postów (wyswietl_posty()).
+
+5. wyswietl_posty()
+
+GET /posty
+
+Ustawia posty w stanie.
+
+6. wyswietl_uzytkownikow()
+
+GET /uzytkownicy
+
+Ustawia uzytkownicy w stanie (tylko dla admina).
+
+7. edytuj_post(id, uzytkownik_id, tresc)
+
+PUT /edytuj_post
+
+Body: { id, uzytkownik_id, tresc }
+
+Po sukcesie odświeża listę postów.
+
+8. edytuj_konto(nazwa_uzytkownika, email, hasla, id)
+
+PUT /edytuj_uzytkownika
+
+Body: { nazwa_uzytkownika, email, hasla, id }
+
+Po sukcesie odświeża dane konta.
+
+9. Admin_usun_post(id)
+
+DELETE /usun_post_uzytkownika-admin
+
+Body: { id }
+
+Po sukcesie odświeża posty.
+
+10. Admin_usun_uzytkownika(id)
+
+DELETE /usun_uzytkownika-admin
+
+Body: { id }
+
+Po sukcesie odświeża listę użytkowników.
+
+Hooki
+useEffect(() => { fetchuj() }, [])
+
+Przy starcie aplikacji wywołuje:
+
+wyswietl_konto()
+
+wyswietl_posty()
+
+wyswietl_uzytkownikow()
+
+Routing (React Router)
+Ścieżka	Komponent	Opis
+/	Glowna	Główna strona z listą postów i możliwością dodawania postów
+/moj_profil/:id	MojProfil	Strona profilu użytkownika z możliwością edycji konta
+/admin!	Admin	Panel administracyjny do zarządzania użytkownikami i postami (tylko dla admina)
+Nawigacja
+
+Ikony w navbarze:
+
+FaHome - przejście do strony głównej
+
+FaUser - przejście do profilu użytkownika
+
+FaUserShield - dostęp dla admina do panelu admina
+
+Przyciski:
+
+Wyloguj - ustawia stanZalogowania na null i pokazuje alert
+
+Logika wyświetlania
+
+Jeśli stanZalogowania jest null → pokazuje komponent <Logowanie />.
+
+Po zalogowaniu renderuje cały interfejs aplikacji z navbar i routerem.
+
+Stylizacja
+
+Bootstrap klasy: navbar, container, btn, d-flex, rounded-circle, itp.
+
+Ikony React Icons użyte do navbaru.
+
+Alerty
+
+Wszystkie akcje (logowanie, rejestracja, dodanie/edycja/usuwanie postów, admin) wyświetlają alerty z wynikiem akcji.

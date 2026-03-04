@@ -1,0 +1,151 @@
+DOKUMENTACJA APLIKACJI FRONTEND (React)
+1. App.js
+Opis
+
+Główny komponent aplikacji. Zarządza stanem użytkownika, logowaniem, rejestracją, postami oraz administracją. Obsługuje routing między stronami: główną, profilem użytkownika i panelem admina.
+
+Stan (useState)
+Nazwa	Typ	Opis
+moje_konto	Object	Dane zalogowanego użytkownika
+id	Number	ID zalogowanego użytkownika
+posty	Array	Lista postów z backendu
+stanZalogowania	Boolean / null	Status zalogowania (null = niezalogowany)
+uzytkownik	String	Rola zalogowanego użytkownika (user / admin)
+login	String	Nazwa zalogowanego użytkownika
+uzytkownicy	Array	Lista wszystkich użytkowników (tylko admin)
+Główne funkcje
+
+wyswietl_konto() - pobiera dane zalogowanego użytkownika z backendu.
+
+logowanie(email, nazwa_uzytkownika, hasla) - loguje użytkownika; ustawia stan i role.
+
+rejestracja(email, nazwa_uzytkownika, hasla) - rejestruje nowego użytkownika.
+
+dodaj_posty(tresc, uzytkownik_id) - dodaje nowy post.
+
+wyswietl_posty() - pobiera listę wszystkich postów.
+
+wyswietl_uzytkownikow() - pobiera listę wszystkich użytkowników (admin).
+
+edytuj_post(id, uzytkownik_id, tresc) - edytuje treść posta.
+
+edytuj_konto(nazwa_uzytkownika, email, hasla, id) - edytuje dane konta użytkownika.
+
+Admin_usun_post(id) - administrator usuwa post.
+
+Admin_usun_uzytkownika(id) - administrator usuwa użytkownika.
+
+Routing
+
+/ → Glowna
+
+/moj_profil/:id → MojProfil
+
+/admin! → Admin (tylko dla roli admin)
+
+Wylogowanie
+
+Wylogowanie ustawia stanZalogowania na null.
+
+2. Komponent Glowna
+Opis
+
+Wyświetla listę postów i umożliwia użytkownikowi:
+
+dodawanie nowych postów,
+
+filtrowanie postów (wszystkie / moje),
+
+edycję własnych postów.
+
+Props
+Nazwa	Typ	Opis
+dodaj_posty	Function	Funkcja dodająca nowy post
+posty	Array	Lista postów
+id	Number	ID zalogowanego użytkownika
+login	String	Nazwa zalogowanego użytkownika
+edytuj_posty	Function	Funkcja edytująca post
+Stan
+Nazwa	Typ	Opis
+tresc	String	Nowy post do dodania
+filtr	String	Filtr postów (wszystkie / moje)
+edytowanyPost	Number / null	ID posta w trybie edycji
+nowaTresc	String	Nowa treść posta podczas edycji
+Funkcje
+
+DodajHandle(e) - dodaje post i resetuje tresc.
+
+filtr_postow(post) - filtruje posty do wyświetlenia.
+
+zapiszEdycje(id_posta) - zapisuje edycję posta i resetuje tryb edycji.
+
+3. Komponent MojProfil
+Opis
+
+Strona profilu użytkownika, umożliwia:
+
+przeglądanie danych konta,
+
+edycję nazwy użytkownika, emaila i hasła.
+
+Props
+Nazwa	Typ	Opis
+moje_konto	Object	Dane konta zalogowanego użytkownika
+edytuj_konto	Function	Funkcja do edycji danych konta
+Stan
+Nazwa	Typ	Opis
+edytuj	Number / null	Tryb edycji (ID konta)
+login	String	Nazwa użytkownika w formularzu
+email	String	Email w formularzu
+haslo	String	Hasło w formularzu
+Funkcje
+
+ustaw(e) - zapisuje zmiany i wyłącza tryb edycji.
+
+4. Komponent Admin
+Opis
+
+Panel administratora do zarządzania użytkownikami i postami.
+
+Props
+Nazwa	Typ	Opis
+uzytkownicy	Array	Lista wszystkich użytkowników
+posty	Array	Lista wszystkich postów
+Admin_usun_uzytkownika	Function	Funkcja usuwająca użytkownika
+Admin_usun_post	Function	Funkcja usuwająca post
+Funkcje
+
+Usuń użytkownika (Usuń) - nie można usuwać adminów.
+
+Usuń post (Usuń) - każdy post można usunąć.
+
+5. Komponent Logowanie
+Opis
+
+Obsługuje logowanie i rejestrację użytkownika.
+
+Props
+Nazwa	Typ	Opis
+logowanie	Function	Funkcja logowania użytkownika
+rejestracja	Function	Funkcja rejestracji użytkownika
+Stan
+Nazwa	Typ	Opis
+tryb	String / null	Tryb: logowanie / rejestracja / null
+emailLocal	String	Email w formularzu
+loginLocal	String	Login w formularzu
+hasloLocal	String	Hasło w formularzu
+Funkcje
+
+handleLogowanie(e) - wywołuje funkcję logowania.
+
+handleRejestracja(e) - wywołuje funkcję rejestracji.
+
+Uwagi ogólne
+
+Wszystkie komponenty korzystają z Bootstrap do stylizacji.
+
+Backend jest wywoływany przez fetch w App.js.
+
+Logika filtrowania, dodawania i edycji postów jest zarządzana lokalnie w stanie komponentów.
+
+Komponent Admin i filtrowanie postów uwzględniają rolę użytkownika (user / admin).

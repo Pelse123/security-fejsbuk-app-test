@@ -1,0 +1,57 @@
+DOKUMENTACJA KOMPONENTU Admin
+Opis
+
+Komponent Admin odpowiada za panel administracyjny, który umożliwia:
+
+przeglądanie i zarządzanie użytkownikami,
+
+przeglądanie i zarządzanie postami.
+
+Jest używany tylko dla użytkowników o roli admin.
+
+Props
+Nazwa	Typ	Opis
+uzytkownicy	Array	Lista wszystkich użytkowników pobrana z backendu
+posty	Array	Lista wszystkich postów pobrana z backendu
+Admin_usun_uzytkownika	Function	Funkcja do usuwania użytkownika po ID
+Admin_usun_post	Function	Funkcja do usuwania posta po ID
+Struktura komponentu
+1. Sekcja Użytkownicy
+
+Wyświetla tabelę użytkowników (ID, Nazwa użytkownika, Email, Rola, Akcje).
+
+Przycisk Usuń usuwa użytkownika za pomocą Admin_usun_uzytkownika(id).
+
+Przycisk jest wyłączony dla adminów, aby nie można było usunąć innych adminów.
+
+Jeśli lista użytkowników jest pusta - pokazuje wiersz: "Brak użytkowników".
+
+2. Sekcja Posty
+
+Wyświetla tabelę postów (ID, Treść, Użytkownik, Data, Akcje).
+
+Przycisk Usuń usuwa post za pomocą Admin_usun_post(id).
+
+Jeśli lista postów jest pusta - pokazuje wiersz: "Brak postów".
+
+Stylizacja
+
+Bootstrap:
+
+card, card-header, card-body, table, btn, btn-sm, btn-danger, btn-secondary
+
+Kolory nagłówków: bg-primary dla użytkowników, bg-warning dla postów
+
+shadow-sm dla delikatnego efektu cienia kart
+
+Uwagi
+
+Komponent jest stateless, nie używa własnego stanu (useState) ani hooków.
+
+Wszystkie operacje mutujące (usuwanie) są obsługiwane przez funkcje przekazane z rodzica (App.js).
+
+Obsługa przycisków jest warunkowa:
+
+Użytkownicy z rolą admin nie mogą być usunięci.
+
+Renderowanie tabel jest dynamiczne na podstawie długości tablic (uzytkownicy, posty).

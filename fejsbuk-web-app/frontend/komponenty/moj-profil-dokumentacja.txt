@@ -1,0 +1,75 @@
+DOKUMENTACJA KOMPONENTU MojProfil
+Opis
+
+Komponent MojProfil odpowiada za wyświetlanie i edycję danych zalogowanego użytkownika.
+Umożliwia:
+
+przeglądanie własnego profilu (nazwa, email, data utworzenia konta, rola),
+
+edycję danych profilu (nazwa użytkownika, email, hasło).
+
+Props
+Nazwa	Typ	Opis
+moje_konto	Object	Obiekt z danymi użytkownika (pobrany z backendu)
+edytuj_konto	Function	Funkcja do aktualizacji danych użytkownika w backendzie
+Stan komponentu (useState)
+Nazwa	Typ	Opis
+edytuj	Number / null	Identyfikator użytkownika w trybie edycji, null oznacza brak edycji
+login	String	Aktualna wartość pola nazwy użytkownika w formularzu edycji
+email	String	Aktualna wartość pola email w formularzu edycji
+haslo	String	Aktualna wartość pola hasła w formularzu edycji
+Funkcje wewnętrzne
+ustaw(e)
+
+Zapobiega domyślnej akcji formularza (e.preventDefault()).
+
+Wywołuje funkcję edytuj_konto z wartościami z formularza (login, email, haslo) oraz id użytkownika.
+
+Resetuje stan edytuj do null, co powoduje powrót do widoku profilu.
+
+Tryby renderowania
+1. Widok profilu
+
+Wyświetla:
+
+Awatar z pierwszą literą nazwy użytkownika.
+
+Nazwę użytkownika i ID.
+
+Email, datę dołączenia i rolę.
+
+Przyciski:
+
+Edytuj profil → ustawia edytuj na moje_konto.id, co przełącza na formularz edycji.
+
+2. Tryb edycji
+
+Formularz z polami:
+
+Nazwa użytkownika (input text)
+
+Email (input email)
+
+Hasło (input text)
+
+Po wypełnieniu i zatwierdzeniu formularza wywołuje ustaw().
+
+Stylizacja
+
+Bootstrap:
+
+card, card-body, btn, btn-primary, form-control, form-label
+
+Maksymalna szerokość kontenera: 700px
+
+Lekki cień (shadow-sm) dla karty
+
+Awatar użytkownika: okrągły div z pierwszą literą nazwy użytkownika
+
+Uwagi
+
+Komponent jest częściowo stateful, używa useState do zarządzania formularzem i trybem edycji.
+
+Funkcja edytuj_konto powinna pochodzić z rodzica (App.js) i obsługiwać aktualizację danych w backendzie.
+
+Formularz nie pozwala na pustą nazwę użytkownika ani email (pole required).

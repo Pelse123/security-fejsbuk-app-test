@@ -1,0 +1,211 @@
+
+DOKUMENTACJA API – PORTAL SPOŁECZNOŚCIOWY
+--------------------------------------------------------------
+Technologie
+
+Node.js + Express
+
+MySQL
+
+JSON API
+
+CORS: włączony
+
+Serwer działa na porcie 8000
+--------------------------------------------------------------
+ENDPOINTY UŻYTKOWNIKÓW
+1. GET /moje_konto/:id
+
+Zwraca dane użytkownika o podanym ID.
+
+Parametry w URL:
+
+id – ID użytkownika
+
+Zwraca:
+{
+  "data": [
+    {
+      "id": 1,
+      "nazwa_uzytkownika": "...",
+      "email": "...",
+      "rola": "user/admin",
+      "utworzenie_konta": "YYYY-MM-DD",
+      "hasla": "..."
+    }
+  ]
+}
+
+2. PUT /edytuj_uzytkownika
+
+Edytuje dane użytkownika.
+
+Body (JSON):
+
+nazwa_uzytkownika
+
+email
+
+hasla
+
+id – ID użytkownika
+
+Zwraca:
+{ "data": 1 }
+
+
+(1 = zmieniono, 0 = brak zmian)
+
+3. POST /rejestracja
+
+Tworzy konto użytkownika.
+
+Body (JSON):
+
+nazwa_uzytkownika
+
+email
+
+hasla
+
+Zwraca:
+{ "data": <nowe_id> }
+
+4. POST /logowanie
+
+Loguje użytkownika poprzez email + hasło + nazwę użytkownika.
+
+Body (JSON):
+
+email
+
+hasla
+
+nazwa_uzytkownika
+
+Zwraca:
+{ "data": [ { uzytkownik... } ] }
+
+5. GET /uzytkownicy
+
+Zwraca listę wszystkich użytkowników.
+
+Zwraca:
+{ "data": [ ... ] }
+
+6. DELETE /usun_uzytkownika-admin
+
+Usuwa użytkownika (tylko Admin).
+
+Body (JSON):
+
+id — ID użytkownika
+
+Zwraca:
+{ "data": 1 }
+-----------------------------------------------------------------------------------
+ENDPOINTY POSTÓW
+7. GET /posty
+
+Zwraca wszystkie posty wraz z nazwą użytkownika.
+
+Zwraca:
+{
+  "data": [
+    {
+      "id": 5,
+      "tresc": "...",
+      "utworzone": "...",
+      "nazwa_uzytkownika": "..."
+    }
+  ]
+}
+
+8. POST /dodaj_post
+
+Dodaje nowy post.
+
+Body (JSON):
+
+tresc
+
+uzytkownik_id
+
+Zwraca:
+{ "data": <nowe_id> }
+
+9. DELETE /usun_posty
+
+Usuwa post użytkownika (tylko właściciel).
+
+Body (JSON):
+
+id – ID posta
+
+uzytkownik_id – ID właściciela
+
+Zwraca:
+{ "data": 1 }
+
+10. PUT /edytuj_post
+
+Edytuje treść posta użytkownika.
+
+Body (JSON):
+
+id
+
+uzytkownik_id
+
+tresc
+
+Zwraca:
+{ "data": 1 }
+
+11. DELETE /usun_post_uzytkownika-admin
+
+Admin usuwa post dowolnego użytkownika.
+
+Body (JSON):
+
+id – ID posta
+
+Zwraca:
+{ "data": 1 }
+-----------------------------------------------------------------------------------
+INNE INFORMACJE
+
+Połączenie z bazą MySQL używa dateStrings: true – daty są zwracane jako tekst.
+
+Dane zwracane są zawsze w formacie:
+
+{ "data": ... }
+
+
+Błędy są logowane w konsoli, ale nie zwracane w JSON (brak obsługi błędów HTTP).
+
+PORT
+
+Serwer działa pod adresem:
+
+http://localhost:8000
+
+-----------------------------------------------------------------------------------
+PODSUMOWANIE
+
+API obsługuje:
+
+logowanie,
+
+rejestrację,
+
+pobieranie profilu,
+
+edycję danych użytkownika,
+
+dodawanie postów,
+
+edycję i usuwanie własnych postów,
+
+panel admina do usuwania postów i użytkowników.
+-----------------------------------------------------------------------------------
